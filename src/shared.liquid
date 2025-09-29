@@ -1,0 +1,96 @@
+{% assign monitors = IDX_0.publicGroupList[0].monitorList %}
+{% assign heartbeats = IDX_1.heartbeatList %}
+{% assign uptimes = IDX_1.uptimeList %}
+{% assign incident = IDX_0.incident %}
+
+{% template monitor_status %}
+    {% assign monitor_heartbeats = null %}
+    {% assign status = null %}
+    {% assign ping_lowest = 99999 %}
+    {% assign ping_highest = 0 %}
+    {% assign monitor_uptime = null %}
+
+    <!-- Loop through the array to find matching monitor ID as we cannot access directly -->
+    {% for heartbeat_entry in heartbeats %}
+        {% assign current_key = heartbeat_entry[0] %}
+        {% assign num_key = current_key | plus: 0 %}
+        {% if num_key == monitor.id | plus: 0 %}
+            {% assign monitor_heartbeats = heartbeat_entry[1] %}
+            {% break %}
+        {% endif %}
+    {% endfor %}
+    
+    <!-- Loop through the array to find matching monitor ID as we cannot access directly -->
+    {% for uptime in uptimes %}
+        {% assign current_key = uptime[0] %}
+        {% assign monitor_key = monitor.id | append: "_24" %}
+        {% if current_key == monitor_key %}        
+            {% assign monitor_uptime = uptime[1] %}
+            {% break %}
+        {% endif %}
+    {% endfor %}
+
+    {% assign uptime_percentage = monitor_uptime | plus: 0 | times: 100 | round: 0 %}
+    {% assign latest_monitor_heartbeats = monitor_heartbeats | reverse | slice: 0, heartbeats_limit | reverse %}
+
+    {% for heartbeat in latest_monitor_heartbeats %}
+        {% if heartbeat.ping < ping_lowest %}
+            {% assign ping_lowest = heartbeat.ping %}
+        {% endif %}
+        {% if heartbeat.ping > ping_highest %}
+            {% assign ping_highest = heartbeat.ping %}
+        {% endif %}
+    {% endfor %}
+
+    {% if monitor_heartbeats.last.status == 1 %}
+        {% assign status = '✔︎ UP' %}
+    {% else %}
+        {% assign status = '✖︎ DOWN' %}
+    {% endif %}
+
+    <div class="item">
+        <div class="meta"></div>
+        <div class="content gap--xsmall">
+            {%  if condensed == true %}
+                <div class="label">{{ monitor.name | truncate: 18}}</div>
+            {% else %}
+                <div class="label">{{ monitor.name }}</div>
+            {% endif %}
+            <div class="flex">
+                <div class="label {% if monitor_heartbeats.last.status != 1 %}label--inverted{% endif %}" style="min-width: 80px;">{{ status }}</div>
+                {% if uptime_percentage > 0 %}
+                    <div class="label">{{uptime_percentage}}%</div>
+                {% endif %}
+                {% if condensed == false %}
+                    <div class="label label--small">{{ ping_lowest }}ms - {{ ping_highest }}ms</div>
+                {% endif %}
+            </div>
+            {% if show_tags == true %}
+            <div class="flex">
+                {% if monitor.validCert == true %}
+                    <div class="label label--small label--outline">Cert valid</div>
+                {% endif %}
+                {% for tag in monitor.tags %}
+                    <div class="label label--small label--outline">{{ tag.name }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="grid grid--cols-16">
+            {% for heartbeat in latest_monitor_heartbeats %}
+            <div class="flex flex--col">
+                {% if heartbeat.status == 1 %}
+                    <div class="w--full h--full rounded flex-1 bg--black"></div>
+                {% else %}
+                    <div class="w--full h--full rounded flex-1 bg--gray-55"></div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endtemplate %}
+
+{% capture plugin_icon %}
+    <svg class="w-64 h-64" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="640" height="640"><g transform="translate(320 320)"><linearGradient id="a" x1="259.78" x2="463.85" y1="261.15" y2="456.49" gradientTransform="translate(-320 -320)" gradientUnits="userSpaceOnUse"><stop stop-color="#000"/><stop offset="1" stop-color="#000"/></linearGradient><path stroke-linecap="round" d="M170.4-84.36c53.7 122.74 53.7 199.7 0 230.86-80.55 46.74-290.44 60.99-350.86-10.86-40.28-47.9-40.28-121.24 0-220 40.96-67.46 99.17-101.19 174.63-101.19 75.47 0 134.21 33.73 176.23 101.19z" style="stroke:#f2f2f2;stroke-opacity:.51;stroke-width:200;stroke-dasharray:none;stroke-linecap:butt;stroke-dashoffset:0;stroke-linejoin:miter;stroke-miterlimit:4;fill:url(#a);fill-rule:nonzero;opacity:1"/></g></svg>
+{% endcapture %}

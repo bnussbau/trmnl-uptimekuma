@@ -1,0 +1,25 @@
+<div class="layout">
+  <div class="grid">
+    <div class="columns">
+      <div class="column">
+        {% for monitor in monitors | limit: 3 %}
+          {%
+            render 'monitor_status' with
+            monitor:monitor,
+            heartbeats:heartbeats,
+            uptimes:uptimes,
+            show_tags: false,
+            heartbeats_limit: 16,
+            condensed: false
+          %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="title_bar">
+  <img class="image" src="data:image/svg+xml;base64,{{ plugin_icon | base64_encode }}">
+  <span class="title">Uptime Kuma Statuspage</span>
+  <span class="instance">last updated: {{ 'now' | date: '%s' | plus: trmnl.user.utc_offset | date: '%-I:%M %p' }}</span>
+</div>

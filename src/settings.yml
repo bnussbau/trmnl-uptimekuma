@@ -1,0 +1,38 @@
+---
+strategy: polling
+no_screen_padding: 'no'
+dark_mode: 'no'
+static_data: ''
+polling_verb: get
+polling_url: "{{base_url}}/api/status-page/{{status_page_slug}}\r\n{{base_url}}/api/status-page/heartbeat/{{status_page_slug}}"
+polling_headers: ''
+polling_body: ''
+id: 159393
+custom_fields:
+- keyname: about
+  name: About This Plugin
+  field_type: author_bio
+  description: Visualize your Uptime Kuma Status Pages on TRMNL
+  github_url: https://github.com/bnussbau/trmnl-uptime-kuma-statuspage
+- keyname: base_url
+  field_type: url
+  name: Base URL
+  description: Uptime Kuma Base URL
+  placeholder: https://www.example.com
+  help_text: Please include http:// or https://
+- keyname: status_page_slug
+  field_type: string
+  name: Status Page Slug
+  description: "/status/YOUR_SLUG"
+  placeholder: default
+  help_text: Can be found in your Status Page Settings ("Slug")
+- keyname: display_incident
+  field_type: select
+  options:
+  - true
+  - false
+  default: true
+  name: Show Incident Banner
+  description: Display Incident Banner title and text, if set.
+name: Uptime Kuma Statuspage
+refresh_interval: 1440
