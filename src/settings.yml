@@ -13,7 +13,8 @@ custom_fields:
   name: About This Plugin
   field_type: author_bio
   description: Visualize your Uptime Kuma Status Pages on TRMNL
-  github_url: https://github.com/bnussbau/trmnl-uptime-kuma-statuspage
+  github_url: https://github.com/bnussbau/trmnl-uptimekuma
+  readme_url: https://github.com/bnussbau/trmnl-uptimekuma#-uptime-kuma-for-trmnl
 - keyname: base_url
   field_type: url
   name: Base URL
