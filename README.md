@@ -3,7 +3,6 @@
 <img width="976" height="656" alt="image" src="https://github.com/user-attachments/assets/3a523818-4932-4857-b912-1749cd15105f" />
 
 <img width="150" alt="image" src="https://usetrmnl.com/images/brand/badges/light/works-with-trmnl/trmnl-badge-works-with-light.svg" />
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/bnussbau)
 
 ### Installation
 * [https://usetrmnl.com/recipes/159393](https://usetrmnl.com/recipes/159393)
