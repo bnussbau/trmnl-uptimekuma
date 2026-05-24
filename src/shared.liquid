@@ -1,7 +1,9 @@
-{% assign monitors = IDX_0.publicGroupList[0].monitorList %}
+{% for group in IDX_0.publicGroupList %}
+    {% assign monitors = monitors | concat: group.monitorList %}
+{% endfor %}
 {% assign heartbeats = IDX_1.heartbeatList %}
 {% assign uptimes = IDX_1.uptimeList %}
-{% assign incident = IDX_0.incident %}
+{% assign incident = IDX_0.incidents.first %}
 
 {% template monitor_status %}
     {% assign monitor_heartbeats = null %}
