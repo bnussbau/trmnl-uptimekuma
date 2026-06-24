@@ -3,9 +3,12 @@ strategy: polling
 no_screen_padding: 'no'
 dark_mode: 'no'
 static_data: ''
-framework_version: 2.0.1
 polling_verb: get
-polling_url: "{{base_url}}/api/status-page/{{status_page_slug}}\n{{base_url}}/api/status-page/heartbeat/{{status_page_slug}}"
+framework_version: 2.0.1
+serverless_language: node
+polling_url: |-
+  {{base_url}}/api/status-page/{{status_page_slug}}
+  {{base_url}}/api/status-page/heartbeat/{{status_page_slug}}
 polling_headers: ''
 polling_body: ''
 id: 159393
