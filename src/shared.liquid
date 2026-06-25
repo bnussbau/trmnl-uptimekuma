@@ -46,50 +46,88 @@
 
     {% if monitor_heartbeats.last.status == 1 %}
         {% assign status = '✔︎ UP' %}
+        {% assign status_class = 'label--success' %}
     {% else %}
         {% assign status = '✖︎ DOWN' %}
+        {% assign status_class = 'label--error' %}
     {% endif %}
 
     <div class="item">
         <div class="meta"></div>
-        <div class="content gap--xsmall">
-            {%  if condensed == true %}
-                <div class="label">{{ monitor.name | truncate: 18}}</div>
-            {% else %}
-                <div class="label">{{ monitor.name }}</div>
-            {% endif %}
-            <div class="flex">
-                <div class="label {% if monitor_heartbeats.last.status != 1 %}label--inverted{% endif %}" style="min-width: 80px;">{{ status }}</div>
+        {% if balanced_layout %}
+        <div class="grid grid--cols-2 grow stretch-x w--full gap--xsmall lg:gap self--center">
+            <div class="content gap--xsmall col--span-4 stretch-x no-shrink">
+                    <span class="label lg:label--base" data-clamp="1">{{ monitor.name }}</span>
+                    <div class="flex gap">
+                        <span class="label {{ status_class }} lg:label--base">{{ status }}</span>
+                        {% if uptime_percentage > 0 %}
+                            <span class="value value--small lg:value--base value--tnums">{{ uptime_percentage }}%</span>
+                        {% endif %}
+                    </div>
+                    {% if condensed == false %}
+                        <span class="label label--small lg:label--base hidden lg:block">{{ ping_lowest }}ms - {{ ping_highest }}ms</span>
+                    {% endif %}
+                    {% if show_tags == true %}
+                    <div class="flex gap">
+                        {% if monitor.validCert == true %}
+                            <span class="label label--small label--outline lg:label--base">Cert valid</span>
+                        {% endif %}
+                        {% for tag in monitor.tags %}
+                            <span class="label label--small label--outline lg:label--base">{{ tag.name }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+            </div>
+            <div class="col--span-8 stretch-x">
+                <div class="grid {{ heartbeat_grid | default: 'grid--cols-16' }} {{ heartbeat_height | default: 'h--[20px] lg:h--[28px]' }} w--full">
+                    {% for heartbeat in latest_monitor_heartbeats %}
+                    <div class="flex flex--col">
+                        {% if heartbeat.status == 1 %}
+                            <div class="w--full h--full rounded bg--black"></div>
+                        {% else %}
+                            <div class="w--full h--full rounded bg--gray-60"></div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="content gap--xsmall no-shrink">
+            <span class="label lg:label--base" data-clamp="1">{{ monitor.name }}</span>
+            <div class="flex gap">
+                <span class="label {{ status_class }} lg:label--base">{{ status }}</span>
                 {% if uptime_percentage > 0 %}
-                    <div class="label">{{uptime_percentage}}%</div>
-                {% endif %}
-                {% if condensed == false %}
-                    <div class="label label--small">{{ ping_lowest }}ms - {{ ping_highest }}ms</div>
+                    <span class="value value--small lg:value--base value--tnums">{{ uptime_percentage }}%</span>
                 {% endif %}
             </div>
+            {% if condensed == false %}
+                <span class="label label--small lg:label--base hidden lg:block">{{ ping_lowest }}ms - {{ ping_highest }}ms</span>
+            {% endif %}
             {% if show_tags == true %}
-            <div class="flex">
+            <div class="flex gap">
                 {% if monitor.validCert == true %}
-                    <div class="label label--small label--outline">Cert valid</div>
+                    <span class="label label--small label--outline lg:label--base">Cert valid</span>
                 {% endif %}
                 {% for tag in monitor.tags %}
-                    <div class="label label--small label--outline">{{ tag.name }}</div>
+                    <span class="label label--small label--outline lg:label--base">{{ tag.name }}</span>
                 {% endfor %}
             </div>
             {% endif %}
         </div>
 
-        <div class="grid grid--cols-16">
+        <div class="grid {{ heartbeat_grid | default: 'grid--cols-16' }} grow stretch-x self--center {{ heartbeat_height | default: 'h--[20px] lg:h--[28px]' }}">
             {% for heartbeat in latest_monitor_heartbeats %}
             <div class="flex flex--col">
                 {% if heartbeat.status == 1 %}
-                    <div class="w--full h--full rounded flex-1 bg--black"></div>
+                    <div class="w--full h--full rounded bg--black"></div>
                 {% else %}
-                    <div class="w--full h--full rounded flex-1 bg--gray-55"></div>
+                    <div class="w--full h--full rounded bg--gray-60"></div>
                 {% endif %}
             </div>
             {% endfor %}
         </div>
+        {% endif %}
     </div>
 {% endtemplate %}
 
