@@ -1,35 +1,33 @@
-<div class="layout layout--col">
+<div class="layout layout--col gap--small lg:gap">
   {% if trmnl.plugin_settings.custom_fields_values.display_incident == 'true' and incident != null %}
-    {% assign limit = 4 %}
     <div class="w-full text--center">
-      <div class="divider--h p--2"></div>
-      <span class="title">{{ incident.title }}</span>
-      <div class="richtext richtext--left gap--large p--4">
-        <div class="content content--left gap text--left" data-content-limiter="true" data-content-max-height="80">
+      <div class="divider--h p--1 lg:p--2"></div>
+      <span class="title title--small lg:title--large">{{ incident.title }}</span>
+      <div class="richtext richtext--left gap--large p--2 lg:p--4">
+        <div class="content content--left gap text--left" data-content-limiter="true" data-content-max-height="56" data-content-max-height-lg="160">
           {{ incident.content }}
         </div>
       </div>
-      <div class="divider--h pb--4"></div>
+      <div class="divider--h pb--2 lg:pb--4"></div>
     </div>
-  {% else %}
-    {% assign limit = 7 %}
   {% endif %}
 
-  <div class="grid">
-    <div class="columns">
-      <div class="column">
-        {% for monitor in monitors | limit: limit %}
-          {%
-            render 'monitor_status' with
-            monitor:monitor,
-            heartbeats:heartbeats,
-            uptimes:uptimes,
-            show_tags: true,
-            heartbeats_limit: 16,
-            condensed: false
-          %}
-        {% endfor %}
-      </div>
+  <div class="columns" data-overflow-max-cols="2" data-overflow-counter="true">
+    <div class="column">
+      {% for monitor in monitors %}
+        {%
+          render 'monitor_status' with
+          monitor:monitor,
+          heartbeats:heartbeats,
+          uptimes:uptimes,
+          show_tags: true,
+          heartbeats_limit: 16,
+          heartbeat_grid: 'grid--cols-16',
+          heartbeat_height: 'h--[20px] lg:h--[48px]',
+          balanced_layout: true,
+          condensed: false
+        %}
+      {% endfor %}
     </div>
   </div>
 </div>

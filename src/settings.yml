@@ -4,7 +4,7 @@ no_screen_padding: 'no'
 dark_mode: 'no'
 static_data: ''
 polling_verb: get
-framework_version: 2.0.1
+framework_version: 3.1.1
 serverless_language: node
 polling_url: |-
   {{base_url}}/api/status-page/{{status_page_slug}}
@@ -17,7 +17,7 @@ custom_fields:
   name: About This Plugin
   field_type: author_bio
   category: kpi,programming
-  description: Visualize your Uptime Kuma Status Pages on TRMNL
+  description: Visualize your Uptime Kuma Status Pages on TRMNL. [Now built on Framework 3 and optimized for TRMNL X]
   email_address: trmnl@benjaminnussbaum.at
   github_url: https://github.com/bnussbau/trmnl-uptimekuma
   readme_url: https://github.com/bnussbau/trmnl-uptimekuma#-uptime-kuma-for-trmnl
