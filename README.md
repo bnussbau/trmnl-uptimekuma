@@ -1,11 +1,12 @@
 ## ✅ Uptime Kuma for TRMNL
 
-<img width="976" height="656" alt="image" src="https://github.com/user-attachments/assets/3a523818-4932-4857-b912-1749cd15105f" />
+<img width="976" height="656" alt="image" src="https://github.com/user-attachments/assets/cf4c8b3b-a1c0-427a-a2a1-ab73b056a076" />
 
 <img width="150" alt="image" src="https://usetrmnl.com/images/brand/badges/light/works-with-trmnl/trmnl-badge-works-with-light.svg" />
 
 ### Installation
 * [https://usetrmnl.com/recipes/159393](https://usetrmnl.com/recipes/159393)
+* LaraPaper: OSS Catalog
 
 ### Configuration
 
