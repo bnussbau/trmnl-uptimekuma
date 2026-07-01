@@ -17,6 +17,7 @@ custom_fields:
   name: About This Plugin
   field_type: author_bio
   category: kpi,programming
+  help_text: TRMNL X Ready
   description: Visualize your Uptime Kuma Status Pages on TRMNL. [Now built on Framework 3 and optimized for TRMNL X]
   email_address: trmnl@benjaminnussbaum.at
   github_url: https://github.com/bnussbau/trmnl-uptimekuma
