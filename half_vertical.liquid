@@ -1,0 +1,41 @@
+<div class="layout layout--col layout--top gap--xsmall lg:gap">
+  {% if trmnl.plugin_settings.custom_fields_values.display_incident == 'true' and incident != null %}
+    {% assign limit = 4 %}
+    {% assign show_tags = false %}
+    <div class="w-full text--center no-shrink">
+      <span class="title title--small lg:title--base">{{ incident.title }}</span>
+      <div class="richtext richtext--left p--1 lg:p--4">
+        <div class="content content--left text--left" data-content-limiter="true" data-content-max-height="60" data-content-max-height-lg="120">
+          {{ incident.content | truncate: 120 }}
+        </div>
+      </div>
+    </div>
+  {% else %}
+    {% assign limit = 7 %}
+  {% endif %}
+
+  <div class="columns grow stretch-x w--full" data-overflow-max-cols="1" data-overflow-counter="true">
+    <div class="column">
+      {% for monitor in monitors | limit: limit %}
+        {%
+          render 'monitor_status' with
+          monitor:monitor,
+          heartbeats:heartbeats,
+          uptimes:uptimes,
+          show_tags: true,
+          heartbeats_limit: 16,
+          heartbeat_grid: 'grid--cols-16',
+          heartbeat_height: 'h--[14px] lg:h--[28px]',
+          balanced_layout: true,
+          condensed: true
+        %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<div class="title_bar">
+  <img class="image" src="data:image/svg+xml;base64,{{ plugin_icon | base64_encode }}">
+  <span class="title">Uptime Kuma Statuspage</span>
+  <span class="instance">{{ 'now' | date: '%s' | plus: trmnl.user.utc_offset | date: '%-I:%M %p' }}</span>
+</div>

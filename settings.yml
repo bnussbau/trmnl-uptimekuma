@@ -1,0 +1,66 @@
+---
+strategy: polling
+no_screen_padding: 'no'
+dark_mode: 'no'
+static_data: ''
+polling_verb: get
+framework_version: 3.1.1
+serverless_language: node
+polling_url:
+polling_headers:
+polling_body:
+id: 159393
+oauth_enabled: 'false'
+oauth_pkce_enabled: 'no'
+oauth_authorize_url: ''
+oauth_token_url: ''
+oauth_scopes: ''
+oauth_scope_separator: ''
+oauth_refresh_url: ''
+oauth_auth_params:
+oauth_token_headers:
+oauth_token_site: ''
+oauth_token_params:
+oauth_token_request_auth_method: ''
+oauth_body_format: ''
+oauth_token_response_metadata: ''
+oauth_authorization_method: ''
+oauth_refresh_params: ''
+oauth_token_field_name: ''
+oauth_expiry_field_name: ''
+oauth_expiry_strategy: ''
+oauth_fixed_expiry_ms: ''
+custom_fields:
+- keyname: about
+  name: About This Plugin
+  field_type: author_bio
+  category: kpi,programming
+  help_text: TRMNL X Ready
+  description: Visualize your Uptime Kuma Status Pages on TRMNL. [Now built on Framework 3 and optimized for TRMNL X]
+  email_address: trmnl@benjaminnussbaum.at
+  github_url: https://github.com/bnussbau/trmnl-uptimekuma
+  readme_url: https://github.com/bnussbau/trmnl-uptimekuma#-uptime-kuma-for-trmnl
+  learn_more_url: https://github.com/bnussbau/trmnl-uptimekuma?tab=readme-ov-file#-uptime-kuma-for-trmnl
+- keyname: base_url
+  field_type: url
+  name: Base URL
+  description: Uptime Kuma Base URL
+  placeholder: https://www.example.com
+  help_text: Please include http:// or https://
+- keyname: status_page_slug
+  field_type: string
+  name: Status Page Slug
+  description: "/status/YOUR_SLUG"
+  placeholder: default
+  help_text: Can be found in your Status Page Settings ("Slug")
+- keyname: display_incident
+  field_type: select
+  options:
+  - true
+  - false
+  default: true
+  name: Show Incident Banner
+  description: Display Incident Banner title and text, if set.
+name: Uptime Kuma Statuspage
+refresh_interval: 1440
+oauth_connection_config:
